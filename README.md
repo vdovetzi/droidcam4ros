@@ -1,12 +1,12 @@
 # droidcam4ros
 
-**ROS 2 wrapper for the [DroidCam](https://www.dev47apps.com/droidcam/)**
+**ROS2 wrapper for the [DroidCam](https://www.dev47apps.com/droidcam/)**
 
-This package integrates the DroidCam Linux client with ROS 2, allowing you to use your Android/iPhone as a camera source in ROS 2 applications. It wraps the DroidCam Linux library and provides a ROS 2 publisher that publishes camera frames as ROS 2 image messages.
+This package integrates the DroidCam Linux client with ROS2, allowing you to use your Android/iPhone as a camera source in ROS2 applications. It wraps the DroidCam Linux library and provides a ROS2 publisher that publishes camera frames as ROS2 image messages.
 
 ## Dependencies
 
-Make sure the following librariues are installed on your system:
+Make sure the following libraries are installed on your system:
 - `glib-2.0`
 - `libswscale`, `libavutil`
 - `libturbojpeg`
@@ -29,7 +29,7 @@ sudo apt install \
 
 ## Build
 
-Clone into your ROS 2 workspace and build:
+Clone into your ROS2 workspace and build:
 ``` bash
 cd ~/ros2_ws/src
 git clone https://github.com/yourusername/droidcam4ros.git
@@ -66,7 +66,7 @@ Arguments (pass arguments as '<name>:=<value>'):
 - Connects to the DroidCam app (via WiFi/USB).
 - Command-line client equivalent to `droidcam-cli` from [here](https://github.com/dev47apps/droidcam-linux-client)
 ### [`droidcam-publisher`](src/droidcam-publisher.cpp)
-- Wraps the V4L2 device and publishes images to ROS 2.
+- Wraps the V4L2 device and publishes images to ROS2.
 - Parameters:
     - device (int): V4L2 device number
     - output_topic (string): topic name for publishing images
