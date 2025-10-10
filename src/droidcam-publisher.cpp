@@ -11,9 +11,11 @@ int main(int argc, char** argv){
 
     node->declare_parameter<int32_t>("device");
     node->declare_parameter<std::string>("output_topic");
+    node->declare_parameter<std::string>("frame_id");
 
     int32_t device = node->get_parameter("device").as_int();
     std::string output_topic = node->get_parameter("output_topic").as_string();
+    std::string frame_id = node->get_parameter("frame_id").as_string();
 
     cv::VideoCapture cap;
 
@@ -26,7 +28,7 @@ int main(int argc, char** argv){
 
     cv::Mat frame;
     std::unique_ptr<image_transport::ImageTransport> it = std::make_unique<image_transport::ImageTransport>(node);
-    std::unique_ptr<image_transport::Publisher> publisher = std::make_unique<image_transport::Publisher>(it->advertise(output_topic, 1));
+    std::unique_ptr<image_transport::Publisher> publisher = std::make_unique<image_transport::Publisher>(it->advertise(output_topic, 10));
 
     while (rclcpp::ok()){
         cap >> frame;
@@ -40,7 +42,7 @@ int main(int argc, char** argv){
         
         auto msg = cv_bridge::CvImage(std_msgs::msg::Header(), "bgr8", frame).toImageMsg();
         msg->header.stamp = now;
-        msg->header.frame_id = "droidcam";
+        msg->header.frame_id = frame_id;;
         
         publisher->publish(msg);
     }

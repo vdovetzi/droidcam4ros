@@ -23,6 +23,11 @@ def generate_launch_description():
             default_value='image_raw',
             description='Ouput topic name for publisher'
         ),
+        DeclareLaunchArgument(
+            'frame_id',
+            default_value='droidcam',
+            description='Frame ID to publish image with'
+        ),
         Node(
             name='droidcam_client',
             package='droidcam4ros',
@@ -35,7 +40,8 @@ def generate_launch_description():
             executable='droidcam-publisher',
             parameters=[{
                 'device': LaunchConfiguration('device'),
-                'output_topic': LaunchConfiguration('output_topic')
+                'output_topic': LaunchConfiguration('output_topic'),
+                'frame_id': LaunchConfiguration('frame_id')
             }]
         )
         ])
