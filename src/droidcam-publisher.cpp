@@ -2,6 +2,29 @@
 #include <rclcpp/rclcpp.hpp>
 #include <cv_bridge/cv_bridge.hpp>
 #include <opencv2/videoio.hpp>
+#include <linux/videodev2.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+
+int32_t find_droidcam_device() {
+    for (int i = 0; i < 99; ++i) {
+        std::string device_path = "/dev/video" + std::to_string(i);
+        int fd = open(device_path.c_str(), O_RDONLY);
+
+        if (fd == -1) {
+            continue;
+        }
+
+        v4l2_capability cap;
+        if (ioctl(fd, VIDIOC_QUERYCAP, &cap) == 0 && std::string(reinterpret_cast<const char*>(cap.driver)) == "Droidcam") {
+            close(fd);
+            return i;
+        }
+        close(fd);
+    }
+
+    return -1;
+}
 
 
 int main(int argc, char** argv){
@@ -9,7 +32,7 @@ int main(int argc, char** argv){
 
     rclcpp::Node::SharedPtr node = rclcpp::Node::make_shared("droidcam_publisher");
 
-    node->declare_parameter<int32_t>("device");
+    node->declare_parameter<int32_t>("device", find_droidcam_device());
     node->declare_parameter<std::string>("output_topic");
     node->declare_parameter<std::string>("frame_id");
 

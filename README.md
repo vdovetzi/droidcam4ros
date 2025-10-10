@@ -44,10 +44,6 @@ source install/setup.bash
 ros2 launch droidcam4ros droidcam-publisher.launch.py -s
 
 Arguments (pass arguments as '<name>:=<value>'):
-
-    'device':
-        DroidCam V4L2 Linux device number
-
     'ip':
         DroidCam device`s WiFi IP
 

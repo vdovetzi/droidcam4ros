@@ -6,10 +6,6 @@ from launch.substitutions import LaunchConfiguration
 def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
-            'device',
-            description='DroidCam V4L2 Linux device number'
-        ),
-        DeclareLaunchArgument(
             'ip',
             description='DroidCam device`s WiFi IP'
         ),
@@ -39,7 +35,6 @@ def generate_launch_description():
             package='droidcam4ros',
             executable='droidcam-publisher',
             parameters=[{
-                'device': LaunchConfiguration('device'),
                 'output_topic': LaunchConfiguration('output_topic'),
                 'frame_id': LaunchConfiguration('frame_id')
             }]
